@@ -4,7 +4,10 @@ import morgan from "morgan";
 import chalk from "chalk";
 import dns from "dns";
 import connectDB from "./config/connectDB.js";
+import Limiter from "./config/rate-limiter.js";
 import router from "./routes/index.js";
+import cors from "cors";
+import limiter from "./config/rate-limiter.js";
 
 dotenv.config({ path: ".env.development" });
 
@@ -16,6 +19,8 @@ const port = process.env.PORT || 5000;
 // Middlewares
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cors());
+app.use(limiter);
 
 // Static folder for uploaded images
 app.use("/uploads", express.static("uploads"));
@@ -30,7 +35,7 @@ app.get("/", (req, res) => {
 connectDB();
 
 const server = app.listen(port, () => {
-  console.log(chalk.green(`Server running on port ${port}`));
+  console.log(chalk.blue(`Server running on port ${port}`));
 });
 
 // Graceful shutdown
