@@ -6,7 +6,7 @@ const connectDB = async () => {
   mongoose
   .connect(process.env.DB_CONNECTION)
   .then(() => {
-    console.log(chalk.green(" MongoDB connected"));
+    console.log(chalk.blue(" MongoDB connected"));
   })
   .catch((error) => {
     console.error(chalk.red("MongoDB connection failed"));
