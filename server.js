@@ -1,15 +1,21 @@
-const express = require("express");
-require("dotenv").config();
-const morgan = require("morgan");
-const chalk = require("chalk");
-const mongoose = require("mongoose");
 
+import express from "express";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import chalk from "chalk";
+import dns from "dns";
+import connectDB from "./config/connectDB.js";
 
+dotenv.config( {path: ".env.development"});
+//dns config
 
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
+//var 
 const app = express();
 const port = process.env.PORT ;
 
-
+//middleware
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -18,26 +24,15 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-const dns = require("dns");
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
-mongoose
-  .connect(process.env.DB_CONNECTION)
-  .then(() => {
-    console.log(chalk.green(" MongoDB connected"));
-  })
-  .catch((error) => {
-    console.error(chalk.red("MongoDB connection failed"));
-    console.error(error);
-  });
-
+connectDB();
 
 const server = app.listen(port, () => {
   console.log(chalk.green(` Server running on port ${port}`));
 });
 
-
+// node grace exit
 async function shutdown() {
   console.log(chalk.yellow("Shutting down gracefully..."));
 
