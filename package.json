@@ -20,10 +20,13 @@
   "type": "module",
   "dependencies": {
     "chalk": "^6.0.0",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
     "mongoose": "^9.9.3",
     "morgan": "^1.11.0",
+    "multer": "^2.2.0",
     "node-graceful-shutdown": "^1.1.5",
     "swagger-ui": "^5.32.13"
   },
