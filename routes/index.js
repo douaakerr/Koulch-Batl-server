@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { uploadImage } from "../controllers/uploadimage.js";
 import upload from "../middleware/upload.js";
-import usersRouter from './v1/index.js'
+import v1 from './v1/index.js'
 
 const router = Router();
 
