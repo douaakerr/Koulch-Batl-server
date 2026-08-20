@@ -4,7 +4,6 @@ import morgan from "morgan";
 import chalk from "chalk";
 import dns from "dns";
 import connectDB from "./config/connectDB.js";
-import Limiter from "./config/rate-limiter.js";
 import router from "./routes/index.js";
 import cors from "cors";
 import limiter from "./config/rate-limiter.js";
