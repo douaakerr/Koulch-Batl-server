@@ -27,6 +27,7 @@
     "express-rate-limit": "^8.6.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.3",
+    "mongoose-paginate-v2": "^1.9.5",
     "morgan": "^1.11.0",
     "multer": "^2.2.0",
     "node-graceful-shutdown": "^1.1.5",
