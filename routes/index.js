@@ -5,7 +5,7 @@ import usersRouter from './v1/index.js'
 
 const router = Router();
 
-router.use('/v1',usersRouter)
+router.use('/v1', v1)
 
 router.post(
   "/profile-image",
