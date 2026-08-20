@@ -1,0 +1,22 @@
+info:
+  name: update user
+  type: http
+
+http:
+  method: PUT
+  url: http://localhost:3000/api/v1/users/6a85d259a8ce8b11089883fc
+  body:
+    type: json
+    data: |-
+      {
+        "password":"1234",
+        "role":"user",
+        "phone":"0348382906"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
