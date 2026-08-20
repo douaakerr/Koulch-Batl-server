@@ -8,7 +8,7 @@ import router from "./routes/index.js";
 import cors from "cors";
 import limiter from "./config/rate-limiter.js";
 
-dotenv.config({ path: ".env.development" });
+dotenv.config();
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 

@@ -231,6 +231,9 @@ importers:
       mongoose:
         specifier: ^9.9.3
         version: 9.9.3
+      mongoose-paginate-v2:
+        specifier: ^1.9.5
+        version: 1.9.5(mongoose@9.9.3)
       morgan:
         specifier: ^1.11.0
         version: 1.11.0(supports-color@5.5.0)
@@ -997,6 +1000,16 @@ packages:
       socks:
         optional: true
 
+  mongoose-lean-virtuals@1.1.1:
+    resolution: {integrity: sha512-8chOqpVE3bcoWT2pIgcJeIZlXaOfQCavZgQZF4qytUtjRBqsNMyzUoR16qdw9XL2kC478N8iA8z0AA+NSS0d1A==}
+    engines: {node: '>=16.20.1'}
+    peerDependencies:
+      mongoose: '>=5.11.10'
+
+  mongoose-paginate-v2@1.9.5:
+    resolution: {integrity: sha512-sgPbV0G7SfdW1XdEuNMokzJOT85GNx786itp6UiNmDvKGyxMSHbeyn4tMZBseOmGu2uOo5ByVgfjhaxkOBY71A==}
+    engines: {node: '>=4.0.0'}
+
   mongoose@9.9.3:
     resolution: {integrity: sha512-9dQaKct05LNgVkunDzFPZsGGBhinobl3Qc5B5KYJkLNG5lBLgqESUEItl1EUIkVaCwZJGBgTuvJiFAjjIATCiw==}
     engines: {node: '>=20.19.0'}
@@ -1004,6 +1017,10 @@ packages:
   morgan@1.11.0:
     resolution: {integrity: sha512-zSkVu3t18r39pw4ixfBKvfZi3y2UOqr7d4WYwcj3m8nXpEQK4rPO6GLzs/CExoRgmX3y9EjmmcXqv6jq0SK46g==}
     engines: {node: '>= 0.8.0'}
+
+  mpath@0.8.4:
+    resolution: {integrity: sha512-DTxNZomBcTWlrMW76jy1wvV37X/cNNxPW1y2Jzd4DZkAaC5ZGsm8bfGfNOthcDuRJujXLqiuS6o3Tpy0JEoh7g==}
+    engines: {node: '>=4.0.0'}
 
   mpath@0.9.0:
     resolution: {integrity: sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==}
@@ -2552,6 +2569,17 @@ snapshots:
       bson: 7.3.2
       mongodb-connection-string-url: 7.0.2
 
+  mongoose-lean-virtuals@1.1.1(mongoose@9.9.3):
+    dependencies:
+      mongoose: 9.9.3
+      mpath: 0.8.4
+
+  mongoose-paginate-v2@1.9.5(mongoose@9.9.3):
+    dependencies:
+      mongoose-lean-virtuals: 1.1.1(mongoose@9.9.3)
+    transitivePeerDependencies:
+      - mongoose
+
   mongoose@9.9.3:
     dependencies:
       '@standard-schema/spec': 1.1.0
@@ -2579,6 +2607,8 @@ snapshots:
       on-headers: 1.1.0
     transitivePeerDependencies:
       - supports-color
+
+  mpath@0.8.4: {}
 
   mpath@0.9.0: {}
 

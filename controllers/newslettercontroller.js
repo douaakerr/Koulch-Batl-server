@@ -1,6 +1,7 @@
 import Newsletter from "../models/newsletter.js";
 
-// CREATE / SUBSCRIBE
+//newsLetter CRUD
+
 export const createNewsletter = async (req, res) => {
   try {
     const newsletter = await Newsletter.create(req.body);
@@ -22,7 +23,7 @@ export const createNewsletter = async (req, res) => {
   }
 };
 
-// READ ALL
+
 export const getNewsletters = async (req, res) => {
   try {
     const newsletters = await Newsletter.find();

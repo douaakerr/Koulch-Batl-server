@@ -1,16 +1,101 @@
-import products from "../models/products.js";
+import Product from "../models/products.js";
+import { getPagination } from "../utils/pagination.js";
 
 export const getAllProducts = async (req, res) => {
   try {
-    const produits = await products
-      .find()
+    const {
+      search,
+      category,
+      condition,
+      minPrice,
+      maxPrice,
+      page = 1,
+      limit = 10,
+      sort = "newest",
+    } = req.query;
+
+    // FILTER
+
+    const filter = {};
+
+    // Search by product name
+    if (search) {
+      filter.name = {
+        $regex: search,
+        $options: "i",
+      };
+    }
+
+    // Category
+    if (category) {
+      filter.category = category;
+    }
+
+    // Condition
+    if (condition) {
+      filter.condition = condition;
+    }
+
+    // Price range
+    if (minPrice || maxPrice) {
+      filter.price = {};
+
+      if (minPrice) {
+        filter.price.$gte = Number(minPrice);
+      }
+
+      if (maxPrice) {
+        filter.price.$lte = Number(maxPrice);
+      }
+    }
+
+    // PAGINATION
+
+    const { currentPage, productsPerPage, skip } = getPagination(page, limit);
+
+    // SORT
+
+    let sortOption = { createdAt: -1 };
+
+    if (sort === "oldest") {
+      sortOption = { createdAt: 1 };
+    }
+
+    if (sort === "priceAsc") {
+      sortOption = { price: 1 };
+    }
+
+    if (sort === "priceDesc") {
+      sortOption = { price: -1 };
+    }
+
+    // GET PRODUCTS
+
+    const produits = await Product.find(filter)
       .populate("seller", "name email role")
-      .sort({ createdAt: -1 });
+      .sort(sortOption)
+      .skip(skip)
+      .limit(productsPerPage);
+    // COUNT
+    const totalProducts = await Product.countDocuments(filter);
+
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+    // RESPONSE
 
     return res.status(200).json({
       success: true,
-      count: produits.length,
+
       produits,
+
+      pagination: {
+        currentPage,
+        productsPerPage,
+        totalProducts,
+        totalPages,
+        hasNextPage: currentPage < totalPages,
+        hasPreviousPage: currentPage > 1,
+      },
     });
   } catch (error) {
     console.error(error);
@@ -105,7 +190,7 @@ export const createProduct = async (req, res) => {
 
     const populatedProduct = await Product.findById(product._id).populate(
       "seller",
-      "name email role"
+      "name email role",
     );
 
     return res.status(201).json({
@@ -137,10 +222,8 @@ export const updateProduct = async (req, res) => {
       });
     }
 
-   
-      //Seller can update only his own product.
-     // Admin can update any product.
-    
+    //Seller can update only his own product.
+    // Admin can update any product.
 
     const isOwner = product.seller.toString() === req.user.id;
 
@@ -192,7 +275,7 @@ export const updateProduct = async (req, res) => {
 
     const updatedProduct = await Product.findById(id).populate(
       "seller",
-      "name email role"
+      "name email role",
     );
 
     return res.status(200).json({
